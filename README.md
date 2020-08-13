@@ -4,6 +4,14 @@ Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora
 
 Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um _Pull Request_ para colocar seus códigos.
 
+### Entrega
+
+  - Projeto individual.
+
+  - Serão três dias de projeto.
+  
+  - O projeto tem até a seguinte data: `24/08/2020 - 14:00h`. Para ser entregue a avaliação final.
+
 ## O que deverá ser desenvolvido
 
 Você criará um projeto em React utilizando Redux para controle de estado. A aplicação consistirá em uma tabela com informações acerca de todos os planetas existentes no universo fictício da série _Star Wars_. A tabela será alimentada com dados retornados de uma [API](https://swapi-trybe.herokuapp.com/api). Haverá, também, vários filtros que permitirão a quem usa selecionar e encontrar com facilidade a informação desejada.
