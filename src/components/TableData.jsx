@@ -33,7 +33,7 @@ const mapStateToProps = (state) => ({
   data: state.dataReducer.data,
 });
 
-//Para resolver o problema do codeclimate 'prop-type array is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
+// Para resolver o problema do codeclimate 'prop-type array is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
 
 TableData.propTypes = {
   data: PropTypes.InstanceOf(Array).isRequired,
