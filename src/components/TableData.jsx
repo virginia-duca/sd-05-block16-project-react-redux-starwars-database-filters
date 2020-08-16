@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class TableData extends React.Component {
   render() {
@@ -31,5 +32,11 @@ class TableData extends React.Component {
 const mapStateToProps = (state) => ({
   data: state.dataReducer.data,
 });
+
+//Para resolver o problema do codeclimate 'prop-type array is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
+
+TableData.propTypes = {
+  data: PropTypes.InstanceOf(Array).isRequired,
+};
 
 export default connect(mapStateToProps)(TableData);

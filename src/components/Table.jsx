@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPlanets } from './actions/actions';
 import TableData from './TableData';
@@ -42,5 +43,11 @@ class Table extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   fetchData: () => dispatch(fetchPlanets()),
 });
+
+// Para resolver o problema do codeclimate 'prop-type object is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
+
+Table.propTypes = {
+  fetchData: PropTypes.InstanceOf(Object).isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Table);
