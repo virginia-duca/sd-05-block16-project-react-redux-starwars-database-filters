@@ -27,9 +27,6 @@ class TableData extends React.Component {
       </tbody>
     );
   }
-  propTypes = {
-    data: PropTypes.array.isRequired,
-  }
 }
 
 const mapStateToProps = (state) => ({
@@ -38,8 +35,8 @@ const mapStateToProps = (state) => ({
 
 // Para resolver o problema do codeclimate 'prop-type array is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
 
-//TableData.propTypes = {
-//  data: PropTypes.nstanceOf(Array).isRequired,
-//};
+TableData.propTypes = {
+  data: PropTypes.instanceOf(Array).isRequired,
+};
 
 export default connect(mapStateToProps)(TableData);
