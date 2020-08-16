@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
 // Para resolver o problema do codeclimate 'prop-type object is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
 
 Table.propTypes = {
-  fetchData: PropTypes.InstanceOf(Object).isRequired,
+  fetchData: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Table);
