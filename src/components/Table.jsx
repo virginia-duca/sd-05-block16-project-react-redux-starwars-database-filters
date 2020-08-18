@@ -3,6 +3,30 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPlanets } from './actions/actions';
 import TableData from './TableData';
+import SearchBar from './SearchBar';
+import './Table.css';
+
+function tableHead() {
+  return (
+    <thead className="table">
+      <tr>
+        <th>Name</th>
+        <th>Climate</th>
+        <th>Terrain</th>
+        <th>Diameter</th>
+        <th>Gravity</th>
+        <th>Rotation Period</th>
+        <th>Orbital Period</th>
+        <th>Population</th>
+        <th>Surface Water</th>
+        <th>Films</th>
+        <th>Created</th>
+        <th>Edited</th>
+        <th>url</th>
+      </tr>
+    </thead>
+  );
+}
 
 class Table extends React.Component {
 
@@ -15,24 +39,9 @@ class Table extends React.Component {
     return (
       <div>
         <div>StarWars Datatable with Filters</div>
+        <SearchBar />
         <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Climate</th>
-              <th>Terrain</th>
-              <th>Diameter</th>
-              <th>Gravity</th>
-              <th>Rotation Period</th>
-              <th>Orbital Period</th>
-              <th>Population</th>
-              <th>Surface Water</th>
-              <th>Films</th>
-              <th>Created</th>
-              <th>Edited</th>
-              <th>url</th>
-            </tr>
-          </thead>
+          {tableHead()}
           <TableData />
         </table>
       </div>
