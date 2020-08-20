@@ -6,6 +6,7 @@ import {
 
 import {
   CHANGE_FILTERBYNAME,
+  CHANGE_FILTERNUMERIC,
 } from '../components/actions/actionsFilter';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   },
 };
 
@@ -28,7 +30,25 @@ const dataReducer = (state = initialState, action) => {
     case RECEIVED_PLANETS_FAIL:
       return { ...state, error: action.error, isFetching: false };
     case CHANGE_FILTERBYNAME:
-      return { ...state, filters: { filterByName: { name: action.nameInput } } };
+      return { ...state,
+        filters: {
+          filterByName: { name: action.nameInput },
+          filterByNumericValues: [{
+            column: '',
+            comparison: '',
+            value: '',
+          }] } };
+    case CHANGE_FILTERNUMERIC:
+      return { ...state,
+        filters: {
+          filterByName: { name: '' },
+          filterByNumericValues: [...state.filters.filterByNumericValues, {
+            column: action.column,
+            comparison: action.comparison,
+            value: action.value,
+          }],
+        },
+      };
     default:
       return state;
   }

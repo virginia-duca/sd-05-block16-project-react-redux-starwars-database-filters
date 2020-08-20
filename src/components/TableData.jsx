@@ -5,7 +5,7 @@ import './Table.css';
 
 function tableBody(planet) {
   return (
-    <tr>
+    <tr key={planet.name}>
       <td>{planet.name}</td>
       <td>{planet.climate}</td>
       <td>{planet.terrain}</td>
@@ -24,27 +24,72 @@ function tableBody(planet) {
 }
 
 class TableData extends React.Component {
-  render() {
-    const { data, name } = this.props;
-    if (name !== '') {
-      const dataFilteredByName = data.filter((planet) => planet.name.includes(name));
-      return (
-        <tbody className="table">
-          {dataFilteredByName.map((planet) => tableBody(planet))}
-        </tbody>
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.numericFilter = this.numericFilter.bind(this);
+    this.nameFilter = this.nameFilter.bind(this);
+    this.allPlanets = this.allPlanets.bind(this);
+  }
+
+  numericFilter() {
+    const { data, filters } = this.props;
+    let planetas = data;
+    filters.forEach((filtro) => {
+      const { comparison, column, value } = filtro;
+      if (comparison === 'maior que') {
+        planetas = planetas.filter((planet) => planet[column] > Number(value));
+      } else if (comparison === 'menor que') {
+        planetas = planetas.filter((planet) => planet[column] < Number(value));
+      } else {
+        planetas = planetas.filter((planet) => planet[column] === value);
+      }
+    });
+    return (
+      <tbody className="table">
+        {planetas.map((planet) => tableBody(planet))}
+      </tbody>
+    );
+  }
+
+  nameFilter() {
+    const { name, data } = this.props;
+    const dataFilteredByName = data.filter((planet) => planet.name.includes(name));
+    return (
+      <tbody className="table">
+        {dataFilteredByName.map((planet) => tableBody(planet))}
+      </tbody>
+    );
+  }
+
+  allPlanets() {
+    const { data } = this.props;
     return (
       <tbody className="table">
         {data.map((planet) => tableBody(planet))}
       </tbody>
     );
   }
+
+  render() {
+    const { name, comparison, column, value } = this.props;
+    if (name !== '') {
+      return this.nameFilter();
+    } else if (
+      name === '' &&
+      comparison !== '' &&
+      column !== '' &&
+      value !== ''
+    ) {
+      return this.numericFilter();
+    }
+    return this.allPlanets();
+  }
 }
 
 const mapStateToProps = (state) => ({
   data: state.data,
   name: state.filters.filterByName.name,
+  filters: state.filters.filterByNumericValues,
 });
 
 // Para resolver o problema do codeclimate 'prop-type array is forbiden', utilizei a função InstanceOf que encontrei neste site: https://github.com/yannickcr/eslint-plugin-react/issues/2079
@@ -52,6 +97,10 @@ const mapStateToProps = (state) => ({
 TableData.propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   name: PropTypes.string.isRequired,
+  filters: PropTypes.instanceOf(Array).isRequired,
+  column: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  comparison: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(TableData);

@@ -1,36 +1,79 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import changeFilterByName from './actions/actionsFilter';
-
-function filterForm() {
-  return (
-    <div>
-      <select data-testid="column-filter" placeholder="SELECT">
-        <option value="population">Population</option>
-        <option value="orbital_period">Orbital Period</option>
-        <option value="diameter">Diameter</option>
-        <option value="rotation_period">Rotation Period</option>
-        <option value="surface_water">Surface Water</option>
-      </select>
-      <select data-testid="comparison-filter">
-        <option value="maior_que">Maior que:</option>
-        <option value="menor_que">Menor que:</option>
-        <option value="igual_a">Igual a:</option>
-      </select>
-      <input type="number" data-testid="value-filter" />
-      <button type="button" data-testid="button-filter">Acionar Filtro</button>
-    </div>
-  );
-}
+import { changeFilterByName, changeFilterByNumeric } from './actions/actionsFilter';
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputText: '',
+      column: '',
+      comparison: '',
+      value: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSelectColumn = this.handleSelectColumn.bind(this);
+    this.handleSelectComparison = this.handleSelectComparison.bind(this);
+    this.handleNumericValue = this.handleNumericValue.bind(this);
+    this.submitToStore = this.submitToStore.bind(this);
+    this.selectParameter = this.selectParameter.bind(this);
+  }
+
+  selectParameter() {
+    return (
+      <select
+        data-testid="column-filter"
+        onChange={this.handleSelectColumn}
+      >
+        <option>select</option>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+    );
+  }
+
+  filterForm() {
+    const { value } = this.state;
+    return (
+      <div>
+        {this.selectParameter()}
+        <select data-testid="comparison-filter" onChange={this.handleSelectComparison}>
+          <option>select</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <input
+          type="number"
+          data-testid="value-filter"
+          value={value}
+          onChange={this.handleNumericValue}
+        />
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={this.submitToStore}
+        >
+          Acionar Filtro
+        </button>
+      </div>
+    );
+  }
+
+  handleSelectColumn(event) {
+    this.setState({
+      column: event.target.value,
+    });
+  }
+
+  handleSelectComparison(event) {
+    this.setState({
+      comparison: event.target.value,
+    });
   }
 
   handleChange(event) {
@@ -38,6 +81,15 @@ class SearchBar extends React.Component {
       inputText: event.target.value,
     });
     this.props.changeFilterByName(event.target.value);
+  }
+
+  handleNumericValue(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  submitToStore() {
+    const { column, comparison, value } = this.state;
+    this.props.changeFilterByNumeric(column, comparison, value);
   }
 
   render() {
@@ -53,7 +105,7 @@ class SearchBar extends React.Component {
             data-testid="name-filter"
           />
         </form>
-        {filterForm()}
+        {this.filterForm()}
       </div>
     );
   }
@@ -61,10 +113,14 @@ class SearchBar extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   changeFilterByName: (nameInput) => dispatch(changeFilterByName(nameInput)),
+  changeFilterByNumeric: (column, comparison, value) => (
+    dispatch(changeFilterByNumeric(column, comparison, value))
+  ),
 });
 
 SearchBar.propTypes = {
   changeFilterByName: PropTypes.instanceOf(Object).isRequired,
+  changeFilterByNumeric: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(SearchBar);
