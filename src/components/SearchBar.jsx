@@ -27,11 +27,11 @@ class SearchBar extends React.Component {
         onChange={this.handleSelectColumn}
       >
         <option>select</option>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="population" id="population">population</option>
+        <option value="orbital_period"id="orbital_period">orbital_period</option>
+        <option value="diameter" id="diameter">diameter</option>
+        <option value="rotation_period" id="rotation_period">rotation_period</option>
+        <option value="surface_water" id="surface_water">surface_water</option>
       </select>
     );
   }
@@ -111,6 +111,10 @@ class SearchBar extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  filters: state.filters.filterByNumericValues,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   changeFilterByName: (nameInput) => dispatch(changeFilterByName(nameInput)),
   changeFilterByNumeric: (column, comparison, value) => (
@@ -123,4 +127,4 @@ SearchBar.propTypes = {
   changeFilterByNumeric: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

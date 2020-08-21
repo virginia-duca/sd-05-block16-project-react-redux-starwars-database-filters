@@ -31,6 +31,14 @@ class TableData extends React.Component {
     this.allPlanets = this.allPlanets.bind(this);
   }
 
+  componentDidMount() {
+    const { filters } = this.props;
+    filters.forEach((filtro) => {
+      const { column } = filtro;
+      document.getElementById(column).remove();
+    });
+  }
+
   numericFilter() {
     const { data, filters } = this.props;
     let planetas = data;
@@ -98,9 +106,9 @@ TableData.propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   name: PropTypes.string.isRequired,
   filters: PropTypes.instanceOf(Array).isRequired,
-  column: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  comparison: PropTypes.string.isRequired,
+  column: PropTypes.string,
+  value: PropTypes.string,
+  comparison: PropTypes.string,
 };
 
 export default connect(mapStateToProps)(TableData);
