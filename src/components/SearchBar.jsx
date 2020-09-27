@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeFilterByName, changeFilterByNumeric } from './actions/actionsFilter';
+import { Select, TextInput, Button } from 'react-materialize'
+import './Table11.css'
+import { fetchPlanets } from './actions/actions';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -20,46 +23,78 @@ class SearchBar extends React.Component {
     this.selectParameter = this.selectParameter.bind(this);
   }
 
+  componentDidMount() {
+    const { fetchData } = this.props;
+    fetchData();
+  }
+
   selectParameter() {
     return (
-      <select
+      <div className="input-field">
+
+      <Select
         data-testid="column-filter"
         onChange={this.handleSelectColumn}
-      >
+        className="white-text"
+        options={{
+          classes: "white-text"
+        }}
+        >
         <option>select</option>
         <option value="population" id="population">population</option>
         <option value="orbital_period"id="orbital_period">orbital_period</option>
         <option value="diameter" id="diameter">diameter</option>
         <option value="rotation_period" id="rotation_period">rotation_period</option>
         <option value="surface_water" id="surface_water">surface_water</option>
-      </select>
+      </Select>
+        
+      </div>
     );
   }
 
   filterForm() {
     const { value } = this.state;
     return (
-      <div>
+      <div className="filter-form">
         {this.selectParameter()}
-        <select data-testid="comparison-filter" onChange={this.handleSelectComparison}>
-          <option>select</option>
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-        </select>
-        <input
+        <Select data-testid="comparison-filter" onChange={this.handleSelectComparison} className="white-text">
+          <option className="white-text">select</option>
+          <option className="white-text" value="maior que">maior que</option>
+          <option className="white-text" value="menor que">menor que</option>
+          <option className="white-text" value="igual a">igual a</option>
+        </Select>
+        <TextInput
+          className="white-text"
+          type="number"
+          data-testid="value-filter"
+          placeholder="number"
+          label="Valor"
+          onChange={this.handleNumericValue}
+          value={value}
+          />
+        {/* <input
           type="number"
           data-testid="value-filter"
           value={value}
           onChange={this.handleNumericValue}
-        />
-        <button
+        /> */}
+        {/* <button
           type="button"
           data-testid="button-filter"
           onClick={this.submitToStore}
         >
           Acionar Filtro
-        </button>
+        </button> */}
+        <Button
+          node="button"
+          style={{
+            marginRight: '5px'
+          }}
+          waves="light"
+          onClick={this.submitToStore}
+        >
+          Acionar Filtro
+        </Button>
       </div>
     );
   }
@@ -87,7 +122,8 @@ class SearchBar extends React.Component {
     this.setState({ value: event.target.value });
   }
 
-  submitToStore() {
+  submitToStore(event) {
+    event.preventDefault()
     const { column, comparison, value } = this.state;
     this.props.changeFilterByNumeric(column, comparison, value);
   }
@@ -95,18 +131,30 @@ class SearchBar extends React.Component {
   render() {
     const { inputText } = this.state;
     return (
-      <div>
-        <form>
-          <label htmlFor="name-filter">Procurar</label>
-          <input
-            placeholder="Name"
-            onChange={this.handleChange}
-            value={inputText}
-            data-testid="name-filter"
-          />
+        <form className="form" >
+          <div className="search-container">
+            <div>
+              <TextInput
+              className="white-text"
+                placeholder="Name"
+                label="Procurar"
+                data-testid="name-filter"
+                onChange={this.handleChange}
+                value={inputText}
+                />
+            </div>
+             {/*  <label htmlFor="name-filter">Procurar</label>
+              <input
+                placeholder="Name"
+                onChange={this.handleChange}
+                value={inputText}
+                data-testid="name-filter"
+                className="validate"
+                id="name-filter"
+                /> */}
+              {this.filterForm()}
+          </div>
         </form>
-        {this.filterForm()}
-      </div>
     );
   }
 }
@@ -120,7 +168,12 @@ const mapDispatchToProps = (dispatch) => ({
   changeFilterByNumeric: (column, comparison, value) => (
     dispatch(changeFilterByNumeric(column, comparison, value))
   ),
+  fetchData: () => dispatch(fetchPlanets())
 });
+
+/* const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(fetchPlanets()),
+}); */
 
 SearchBar.propTypes = {
   changeFilterByName: PropTypes.instanceOf(Object).isRequired,

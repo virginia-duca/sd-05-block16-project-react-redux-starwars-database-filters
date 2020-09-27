@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { fetchPlanets } from './actions/actions';
 import TableData from './TableData';
 import SearchBar from './SearchBar';
-import './Table.css';
+import { Table } from 'react-materialize';
+import './Table11.css';
 
 function tableHead() {
   return (
-    <thead className="table">
+    <thead>
       <tr>
         <th>Name</th>
         <th>Climate</th>
@@ -28,22 +29,31 @@ function tableHead() {
   );
 }
 
-class Table extends React.Component {
+class TableOficial extends React.Component {
 
-  componentDidMount() {
+  /* componentDidMount() {
     const { fetchData } = this.props;
     fetchData();
-  }
+  } */
 
   render() {
     return (
-      <div>
-        <div>StarWars Datatable with Filters</div>
-        <SearchBar />
-        <table>
-          {tableHead()}
-          <TableData />
-        </table>
+      <div className="container1212">
+        <div className="header">
+          <div>
+            <h3 className="white-text">StarWars</h3>
+            <h4 className="white-text">Data Table with Filters</h4>
+          </div>
+          <div className="search-container">
+          <SearchBar />
+          </div>
+        </div>
+        <div className="table-container">
+          <Table className="responsive-table">
+            {tableHead()}
+            <TableData />
+          </Table>
+        </div>
       </div>
     );
   }
@@ -59,4 +69,4 @@ Table.propTypes = {
   fetchData: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Table);
+export default connect(null, mapDispatchToProps)(TableOficial);

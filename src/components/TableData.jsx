@@ -1,7 +1,9 @@
+/** @format */
+
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './Table.css';
+import './Table11.css';
 
 function tableBody(planet) {
   return (
@@ -52,42 +54,28 @@ class TableData extends React.Component {
         planetas = planetas.filter((planet) => planet[column] === value);
       }
     });
-    return (
-      <tbody className="table">
-        {planetas.map((planet) => tableBody(planet))}
-      </tbody>
-    );
+    return <tbody className="table">{planetas.map((planet) => tableBody(planet))}</tbody>;
   }
 
   nameFilter() {
     const { name, data } = this.props;
     const dataFilteredByName = data.filter((planet) => planet.name.includes(name));
-    return (
-      <tbody className="table">
-        {dataFilteredByName.map((planet) => tableBody(planet))}
-      </tbody>
-    );
+    return <tbody className="table">{dataFilteredByName.map((planet) => tableBody(planet))}</tbody>;
   }
 
   allPlanets() {
     const { data } = this.props;
-    return (
-      <tbody className="table">
-        {data.map((planet) => tableBody(planet))}
-      </tbody>
-    );
+    return <tbody className="table">{data.map((planet) => tableBody(planet))}</tbody>;
   }
 
   render() {
-    const { name, comparison, column, value } = this.props;
+    const {
+      name, comparison, column, value,
+    } = this.props;
     if (name !== '') {
       return this.nameFilter();
-    } else if (
-      name === '' &&
-      comparison !== '' &&
-      column !== '' &&
-      value !== ''
-    ) {
+    }
+    if (name === '' && comparison !== '' && column !== '' && value !== '') {
       return this.numericFilter();
     }
     return this.allPlanets();
@@ -106,9 +94,9 @@ TableData.propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   name: PropTypes.string.isRequired,
   filters: PropTypes.instanceOf(Array).isRequired,
-  column: PropTypes.string,
-  value: PropTypes.string,
-  comparison: PropTypes.string,
+  column: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  comparison: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(TableData);
