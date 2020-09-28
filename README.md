@@ -4,18 +4,18 @@ A aplicacao consiste em uma tabela com informacoes vinda de uma [API](https://sw
 
 # Tecnologias utilizadas
 
--HTML
--CSS
--JavaScript ES6
--React
--Redux
--localStorage
+- HTML
+- CSS
+- JavaScript ES6
+- React
+- Redux
+- localStorage
 
-# Instalacao local
+# Instalação local
 
 para rodar a aplicacao localmente, siga os passos abaixo:
 1. Clone o repositório
-  * `git clone git@github.com:tryber/sd-05-block16-project-react-redux-starwars-database-filters.git`.
+  * `git clone https://github.com/virginia-duca/sd-05-block16-project-react-redux-starwars-database-filters.git`.
   * Entre na pasta do repositório que você acabou de clonar:
     * `sd-05-block16-project-react-redux-starwars-database-filters`
 
