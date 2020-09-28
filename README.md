@@ -22,4 +22,8 @@ para rodar a aplicacao localmente, siga os passos abaixo:
 2. Instale as dependências
   * `npm install`
 
+3. Renderize o protótipo
+ *`npm start`
+ 
+
 # Resultados
