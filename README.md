@@ -23,7 +23,7 @@ para rodar a aplicacao localmente, siga os passos abaixo:
   * `npm install`
 
 3. Renderize o protótipo
- *`npm start`
+  * `npm start`
  
 
 # Resultados
